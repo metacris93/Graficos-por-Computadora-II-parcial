@@ -4,11 +4,13 @@
 #include "woods.inc"
 #include "stones.inc"
 #include "metals.inc"
+#include "shapes3.inc"
 
 //camara
 camera{
-   location <0,5,-10>//<10, 25,-50>
+   location <0,9,-12>
    look_at <0,0,0>
+   angle 45
 } 
 
 // create a regular point light source
@@ -74,28 +76,66 @@ box{ <0.5,0.5,0.5> <-0.5,-0.5,-0.5>  translate<-3,2,-3> rotate <0,360*clock,0>  
 
 
 /*************** Objeto nuevo ***************/ 
-
+        
+#declare plx=3;  //pl = planeta en x, y o z respectivamente
+#declare ply=2;
+#declare plz=-3;         
+        
 union{
-             
-    sphere{ <3,2,-3>, 0.5  texture{ EMBWood1 } } //textura al objeto nuevo   
-    
+    sphere{ <plx,ply,plz>, 0.5  texture{ EMBWood1 } } //textura al objeto nuevo      
     /*disc
         {
             <Center>, <Normal>, Radius [, Hole_Radius]
             [OBJECT_MODIFIERS...]
-        }*/
-    
+        }*/    
     disc
         {
-            <3,2,-3>, <1,1,-1>, 1, 0.7  texture{ Gold_Metal } // texturas a aros objeto nuevo
-        }
-          
+          <plx,ply,plz>, <1,0,0>, 1, 0.7  texture{ Gold_Metal } // texturas a aros objeto nuevo
+        }         
     disc
         {
-            <3,2,-3>, <-1,1,1>, 1, 0.7 texture{ Gold_Metal } // texturas a aros objeto nuevo
+          <plx,ply,plz>, <0,1,0>, 1, 0.7 texture{ Gold_Metal } // texturas a aros objeto nuevo
         } 
     
     rotate <0,360*clock,0>
-} 
+}   
+  
+/*************** Segundo Objeto nuevo ***************/   
+
+union{  //Objeto globo terraqueo
+
+#declare gtx=0; //gt = globo terraqueo en x, y, z segun la ultima letra, para poner todo en funcion del centro de la esfera del globo
+#declare gty=2;
+#declare gtz=-3; 
+
+object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de angulo )
+        texture { pigment{color rgb<1,0.7,0>}
+                  finish { phong 1 }
+                } // end of texture
+        rotate<-90,0,280> translate<gtx,gty,gtz>
+      } // end of Segment_of_Torus    
+      
+      sphere{ <gtx,gty,gtz>, 2.7  material {
+        texture {
+          pigment {  Cyan  }
+          finish { F_Glass4 } // le da un ambiente cristalino
+          }
+        interior {I_Glass caustics 1}
+      } }    
+   
+      disc
+        {
+            <gtx+1,gty-4.9,gtz>, <-0.15,1,0>, 3,  texture{ pigment{color rgb<1,0.7,0>}
+                  finish { phong 1 } } 
+        }   
+        
+      cylinder{ <gtx+1,gty-4.9,gtz>, <gtx-0.5,gty+5,gtz>, 0.5 texture { pigment{color rgb<1,0.7,0>}
+                  finish { phong 1 } }
+     
+}
+    translate <0,10,-25>
+    scale 0.2
+
+}
 
 
