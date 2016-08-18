@@ -50,10 +50,14 @@ box{ <2,2,2> <-2,-2,-2>  texture { pigment { Magenta } } translate<-15,8,-16> ro
 
 
 /*************** Objeto nuevo ***************/ 
-
+        
+#declare plx=8;  //pl = planeta en x, y o z respectivamente
+#declare ply=5;
+#declare plz=-15;         
+        
 union{
              
-    sphere{ <8,5,-15>, 1.5  texture{ EMBWood1 } } //textura al objeto nuevo   
+    sphere{ <plx,ply,plz>, 1.5  texture{ EMBWood1 } } //textura al objeto nuevo   
     
     /*disc
         {
@@ -64,28 +68,35 @@ union{
     disc
         {
             //<8,5,-15>, <1,3,0>, 3, 2  texture{ Gold_Metal }
-            <8,5,-15>, <1,0,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
+            <plx,ply,plz>, <1,0,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
         }
           
     disc
         {
             //<8,5,-15>, <-0.5,1,0>, 3, 2 texture{ Gold_Metal }
-            <8,5,-15>, <0,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
+            <plx,ply,plz>, <0,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
         } 
     translate <1,5,-5>    
     rotate <0,360*clock,0>
 } 
+  
+  
+/*************** Segundo Objeto nuevo ***************/   
 
-union{  //Objeto globo terraqueo 
+union{  //Objeto globo terraqueo
+
+#declare gtx=0; //gt = globo terraqueo en x, y, z segun la ultima letra, para poner todo en funcion del centro de la esfera del globo
+#declare gty=5;
+#declare gtz=-15; 
 
 object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de angulo )
         texture { pigment{color rgb<1,0.7,0>}
                   finish { phong 1 }
                 } // end of texture
-        rotate<-90,0,280> translate<0,5,-25>
+        rotate<-90,0,280> translate<gtx,gty,gtz>
       } // end of Segment_of_Torus(...) ----    
       
-sphere{ <0,5,-25>, 2.7  material {
+sphere{ <gtx,gty,gtz>, 2.7  material {
         texture {
           pigment {  Cyan  }
           finish { F_Glass4 } // le da un ambiente cristalino
@@ -95,15 +106,18 @@ sphere{ <0,5,-25>, 2.7  material {
    
 disc
         {
-            <1,0.1,-25>, <-0.15,1,0>, 3,  texture{ pigment{color rgb<1,0.7,0>}
+            <gtx+1,gty-4.9,gtz>, <-0.15,1,0>, 3,  texture{ pigment{color rgb<1,0.7,0>}
                   finish { phong 1 } } 
         }   
         
-cylinder{ <1,0.1,-25>, <-0.5,10,-25>, 0.5 translate <0,0,0> texture { pigment{color rgb<1,0.7,0>}
+cylinder{ <gtx+1,gty-4.9,gtz>, <gtx-0.5,gty+5,gtz>, 0.5 texture { pigment{color rgb<1,0.7,0>}
                   finish { phong 1 } }
      
 }
-                 }
+
+}
+
+
 /*    
 #declare jarron =
 lathe {
