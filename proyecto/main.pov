@@ -2,10 +2,12 @@
 #include "glass.inc"
 #include "textures.inc"
 #include "woods.inc"
+#include "stones.inc"
+#include "metals.inc"
 
 //camara
 camera{
-   location <10, 25,-50>
+   location <0,5,-10>//<10, 25,-50>
    look_at <0,0,0>
 } 
 
@@ -14,43 +16,68 @@ light_source {
   0*x                  // light's position (translated below)
   color rgb <1,1,1>    // light's color
   translate <-20, 40, -20>
+  parallel
+  point_at <1, 0, 0>
 }
 
 //color de fondo del escenario
 background{ White } 
 
+#declare TileNormal =
+    normal
+    { gradient x 2 // Double the strength because of the averaging
+      slope_map
+      { [0 <0, 1>] // 0 height, strong slope up
+        [.05 <1, 0>] // maximum height, horizontal
+        [.95 <1, 0>] // maximum height, horizontal
+        [1 <0, -1>] // 0 height, strong slope down
+      }
+    }
 /*****************   plano   *********************/
-plane{ y, -1 texture{ pigment{ White * 2 }
- finish { reflection 0.35 } } }  // hace una reflexion en el piso    
+plane{ y,  0 
+          pigment                
+          { 
+            checker pigment { DMFWood5 }, pigment { DMFWood1 }
+          }
+          finish { specular 1 }
+          normal
+          { average normal_map
+            { [1 TileNormal]
+              [1 TileNormal rotate y*90]
+            }
+          }  
+       /*texture{ pigment { rgb <.7,.95,1> }  
+       finish { specular .5 reflection .2 } }*/ 
+}  // hace una reflexion en el piso        
+   
 
 /***************   Esfera  de radio 3   ****************/
-sphere{ <10,6,-4>, 2    
+sphere{ <3,2,1>, 0.5    
    material {
         texture {
           pigment {  Cyan  }
           finish { F_Glass4 } // le da un ambiente cristalino
           }
         interior {I_Glass caustics 1}
-   }
-   translate <5,5,-4>    
+   }    
    rotate <0,360*clock,0>
 }
 
 /***************   Cilindro   ***************/
-cylinder{ <0,3,0>, <0,-3,0>, 3 translate <-15,10,0> rotate <0,360*clock,0> texture { pigment { Gray50 } } }
+cylinder{ <0,0.5,0>, <0,-0.5,0>, 0.5 translate <-3,2,1> rotate <0,360*clock,0> texture { pigment { Gray50 } }  finish { specular .5 /*reflection { .3, .6 }*/ } }
 
 /***************   Toroide    ***************/
-torus{ 3, 1 rotate <90,0,0> translate <3,10,5> rotate <0,360*clock,0> texture{ pigment{ White } } }
+torus{ 0.5, 0.2 rotate <90,0,0> translate <0,2,3> rotate <0,360*clock,0> texture{ pigment{ White } }  finish { specular .5 } }
 
 /***************     Caja     ***************/
-box{ <2,2,2> <-2,-2,-2>  texture { pigment { Magenta } } translate<-15,8,-16> rotate <0,360*clock,0> }        
+box{ <0.5,0.5,0.5> <-0.5,-0.5,-0.5>  translate<-3,2,-3> rotate <0,360*clock,0>  texture { pigment { Magenta } }  finish { specular .5 } }        
 
 
 /*************** Objeto nuevo ***************/ 
 
 union{
              
-    sphere{ <8,5,-15>, 1.5  texture{ EMBWood1 } } //textura al objeto nuevo   
+    sphere{ <3,2,-3>, 0.5  texture{ EMBWood1 } } //textura al objeto nuevo   
     
     /*disc
         {
@@ -60,51 +87,15 @@ union{
     
     disc
         {
-            <8,5,-15>, <1,3,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
+            <3,2,-3>, <1,1,-1>, 1, 0.7  texture{ Gold_Metal } // texturas a aros objeto nuevo
         }
           
     disc
         {
-            <8,5,-15>, <-0.5,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
+            <3,2,-3>, <-1,1,1>, 1, 0.7 texture{ Gold_Metal } // texturas a aros objeto nuevo
         } 
-    translate <1,5,-5>    
+    
     rotate <0,360*clock,0>
 } 
-
-  
-/*    
-#declare jarron =
-lathe {
-  cubic_spline
-  13,
-  <0.000000, 0.000000>,
-  <0.000000, 0.000000>,
-  <0.172414, 0.013793>,
-  <0.203448, 0.096552>,
-  <0.210345, 0.203448>,
-  <0.210345, 0.634483>,
-  <0.210345, 1.000000>,
-  <0.196552, 1.000000>,
-  <0.193103, 0.651724>,
-  <0.182759, 0.206897>,
-  <0.151724, 0.096552>,
-  <0.000000, 0.065517>,
-  <0.000000, 0.065517>
-
-  scale <2, 1.5, 2>
-
-}
-
-object {
-  jarron
-  texture {
-    pigment{ color rgb<1,1,1> }
-    finish { Shiny metallic }
-  }
-  scale <4, 4, 4>
-  translate <1, 0.002, -20>
-}
-
-     */
 
 
