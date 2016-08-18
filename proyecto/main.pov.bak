@@ -5,7 +5,7 @@
 
 //camara
 camera{
-   location <15,15,-30>  
+   location <10, 25,-50>
    look_at <0,0,0>
 } 
 
@@ -19,54 +19,59 @@ light_source {
 //color de fondo del escenario
 background{ White } 
 
-//plano
+/*****************   plano   *********************/
 plane{ y, -1 texture{ pigment{ White * 2 }
  finish { reflection 0.35 } } }  // hace una reflexion en el piso    
 
-//Esfera  de radio 3
-sphere{ <10,6,-4>, 3    
-material {
+/***************   Esfera  de radio 3   ****************/
+sphere{ <10,6,-4>, 2    
+   material {
         texture {
           pigment {  Cyan  }
           finish { F_Glass4 } // le da un ambiente cristalino
           }
         interior {I_Glass caustics 1}
-        }
-      }
+   }
+   translate <5,5,-4>    
+   rotate <0,360*clock,0>
+}
 
-//Cilindro
-cylinder{ <0,4,0>, <0,-4,0>, 3 rotate <90,0,0> translate <-10,10,0> texture { pigment { Gray50 } } }
+/***************   Cilindro   ***************/
+cylinder{ <0,3,0>, <0,-3,0>, 3 translate <-15,10,0> rotate <0,360*clock,0> texture { pigment { Gray50 } } }
 
-//Toroide
-torus{ 3, 1 rotate <90,0,0> translate <10,10,5> texture{ pigment{ White } } }
+/***************   Toroide    ***************/
+torus{ 3, 1 rotate <90,0,0> translate <3,10,5> rotate <0,360*clock,0> texture{ pigment{ White } } }
 
-//Caja
-box{ <2,2,2> <-2,-2,-2>  texture { pigment { Magenta } } rotate y*20 translate<0,8,-15> }        
+/***************     Caja     ***************/
+box{ <2,2,2> <-2,-2,-2>  texture { pigment { Magenta } } translate<-15,8,-16> rotate <0,360*clock,0> }        
 
 
-//Objeto nuevo 
+/*************** Objeto nuevo ***************/ 
 
 union{
              
-sphere{ <8,5,-15>, 1.5  texture{ EMBWood1 } } //textura al objeto nuevo   
+    sphere{ <8,5,-15>, 1.5  texture{ EMBWood1 } } //textura al objeto nuevo   
+    
+    /*disc
+        {
+            <Center>, <Normal>, Radius [, Hole_Radius]
+            [OBJECT_MODIFIERS...]
+        }*/
+    
+    disc
+        {
+            <8,5,-15>, <1,3,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
+        }
+          
+    disc
+        {
+            <8,5,-15>, <-0.5,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
+        } 
+    translate <1,5,-5>    
+    rotate <0,360*clock,0>
+} 
 
-/*disc
-    {
-        <Center>, <Normal>, Radius [, Hole_Radius]
-        [OBJECT_MODIFIERS...]
-    }*/
-
-disc
-    {
-        <8,5,-15>, <1,3,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
-    }
-      
-disc
-    {
-        <8,5,-15>, <-0.5,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
-    }
-
-}   
+  
 /*    
 #declare jarron =
 lathe {

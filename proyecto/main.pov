@@ -2,10 +2,13 @@
 #include "glass.inc"
 #include "textures.inc"
 #include "woods.inc"
+#include "shapes3.inc"
 
 //camara
 camera{
-   location <10, 25,-50>
+   //location <0,0,0>
+   //look_at <0,5,-25>
+   location <10,25,-50>
    look_at <0,0,0>
 } 
 
@@ -60,18 +63,47 @@ union{
     
     disc
         {
-            <8,5,-15>, <1,3,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
+            //<8,5,-15>, <1,3,0>, 3, 2  texture{ Gold_Metal }
+            <8,5,-15>, <1,0,0>, 3, 2  texture{ Gold_Metal } // texturas a aros objeto nuevo
         }
           
     disc
         {
-            <8,5,-15>, <-0.5,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
+            //<8,5,-15>, <-0.5,1,0>, 3, 2 texture{ Gold_Metal }
+            <8,5,-15>, <0,1,0>, 3, 2 texture{ Gold_Metal } // texturas a aros objeto nuevo
         } 
     translate <1,5,-5>    
     rotate <0,360*clock,0>
 } 
 
-  
+union{  //Objeto globo terraqueo 
+
+object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de angulo )
+        texture { pigment{color rgb<1,0.7,0>}
+                  finish { phong 1 }
+                } // end of texture
+        rotate<-90,0,280> translate<0,5,-25>
+      } // end of Segment_of_Torus(...) ----    
+      
+sphere{ <0,5,-25>, 2.7  material {
+        texture {
+          pigment {  Cyan  }
+          finish { F_Glass4 } // le da un ambiente cristalino
+          }
+        interior {I_Glass caustics 1}
+   } }    
+   
+disc
+        {
+            <1,0.1,-25>, <-0.15,1,0>, 3,  texture{ pigment{color rgb<1,0.7,0>}
+                  finish { phong 1 } } 
+        }   
+        
+cylinder{ <1,0.1,-25>, <-0.5,10,-25>, 0.5 translate <0,0,0> texture { pigment{color rgb<1,0.7,0>}
+                  finish { phong 1 } }
+     
+}
+                 }
 /*    
 #declare jarron =
 lathe {
