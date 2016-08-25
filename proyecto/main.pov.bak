@@ -66,7 +66,7 @@ sphere{ <3,2,1>, 0.5
 }
 
 /***************   Cilindro   ***************/
-cylinder{ <0,0.5,0>, <0,-0.5,0>, 0.5 translate <-3,2,1> rotate <0,360*clock,0> texture { pigment { Gray50 } }  finish { specular .5 /*reflection { .3, .6 }*/ } }
+cylinder{ <0,0.5,0>, <0,-0.5,0>, 0.5  translate <-3,2,1> rotate <0,360*clock,0> texture{ Tom_Wood }  finish { specular .5 /*reflection { .3, .6 }*/ } }
 
 /***************   Toroide    ***************/
 torus{ 0.5, 0.2 rotate <90,0,0> translate <0,2,3> rotate <0,360*clock,0> texture{ pigment{ White } }  finish { specular .5 } }
@@ -116,9 +116,8 @@ object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de a
       } // end of Segment_of_Torus    
       
       sphere{ <gtx,gty,gtz>, 2.7  material {
-        texture {
-          pigment {  Cyan  }
-          finish { F_Glass4 } // le da un ambiente cristalino
+        texture { 
+        Bright_Blue_Sky  
           }
         interior {I_Glass caustics 1}
       } }    
