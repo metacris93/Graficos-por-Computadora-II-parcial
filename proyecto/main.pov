@@ -35,7 +35,53 @@ background{ White }
         [.95 <1, 0>] // maximum height, horizontal
         [1 <0, -1>] // 0 height, strong slope down
       }
+    } 
+    
+#declare LandArea = texture {
+      pigment {
+        agate
+        turbulence 1
+        lambda 1.5
+        omega .8
+        octaves 8
+        color_map {
+          [0.00 color rgb <.5, .25, .15>]
+          [0.33 color rgb <.1, .5, .4>]
+          [0.86 color rgb <.6, .3, .1>]
+          [1.00 color rgb <.5, .25, .15>]
+        }
+      }
     }
+    
+    #declare OceanArea = texture {
+      pigment {
+        bozo
+        turbulence .5
+        lambda 2
+        color_map {
+          [0.00, 0.33 color rgb <0, 0, 1>
+                      color rgb <0, 0, 1>]
+          [0.33, 0.66 color rgbf <1, 1, 1, 1>
+                      color rgbf <1, 1, 1, 1>]
+          [0.66, 1.00 color rgb <0, 0, 1>
+                      color rgb <0, 0, 1>]
+        }
+      }
+    }
+    
+    #declare CloudArea = texture {
+    pigment {
+      agate
+      turbulence 1
+      lambda 2
+      frequency 2
+      color_map {
+        [0.0 color rgbf <1, 1, 1, 1>]
+        [0.5 color rgbf <1, 1, 1, .35>]
+        [1.0 color rgbf <1, 1, 1, 1>]
+      }
+    }
+  }
     
 /*************************************************/
 // rango divide el clock (0-1) en 4 periodos (0-0.25), (0.25-0.5), ....                                                   
@@ -78,14 +124,37 @@ plane{ y,  0
 }  // hace una reflexion en el piso        
    
 
-/***************   Esfera  de radio 3   ****************/
+
+         /***************   Esfera  de radio 3   ****************/
 sphere{ <3,2,1>, 0.5    
    material {
         texture {
-          pigment {  Cyan  }
-          finish { F_Glass4 } // le da un ambiente cristalino
+#switch (rango)
+  #case (1)
+    pigment { Cyan  }  
+  #break 
+  
+  #case (2)
+    pigment { rgbf <0.4, 0.4, 1, 1>  }
+  #break
+  #case (3)
+     pigment{
+            Cyan
+    }
+  #break
+  #case (4)
+   pigment{
+    rgbf <0.4, 0.4, 1, 1>
+    }
+   #break
+  
+#end     
+                                    
+                  
+finish { F_Glass4 } // le da un ambiente cristalino
           }
-        interior {I_Glass caustics 1}
+        
+          //interior {I_Glass caustics 1}
    }
    
    
@@ -109,8 +178,16 @@ translate <-3,2,1>
 //**********************
  
 rotate <0,360*clock,0>   
-
+#if(rango=1 | rango =3)
 texture{ Tom_Wood }  finish { specular .5 /*reflection { .3, .6 }*/ }  
+#else
+pigment{
+    rgbf <0.854902, 0.647059, 0.12549,0.85>
+    }  
+finish{
+            specular .5
+}    
+#end
 
 //Chrome_Metal, Brass_Metal, Bronze_Metal, Gold_Metal, Silver_Metal, Copper_Metal
 
