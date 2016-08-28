@@ -35,7 +35,9 @@ background{ White }
         [1 <0, -1>] // 0 height, strong slope down
       }
     }
+    
 /*****************   plano   *********************/
+
 plane{ y,  0 
           pigment                
           { 
@@ -61,18 +63,58 @@ sphere{ <3,2,1>, 0.5
           finish { F_Glass4 } // le da un ambiente cristalino
           }
         interior {I_Glass caustics 1}
-   }    
-   rotate <0,360*clock,0>
+   }
+   
+   
+//********************** Rotacion sobre el propio eje
+translate -<3,2,1> 
+rotate <0,360*clock,0>  
+translate <3,2,1>
+//**********************
+       
+rotate <0,360*clock,0>
 }
 
 /***************   Cilindro   ***************/
-cylinder{ <0,0.5,0>, <0,-0.5,0>, 0.5  translate <-3,2,1> rotate <0,360*clock,0> texture{ Tom_Wood }  finish { specular .5 /*reflection { .3, .6 }*/ } }
+cylinder{ <0,0.5,0>, <0,-0.5,0>, 0.5  
+translate <-3,2,1>
+
+//********************** Rotacion sobre el propio eje
+translate -<-3,2,1> 
+rotate <0,360*clock,0>  
+translate <-3,2,1>
+//**********************
+ 
+rotate <0,360*clock,0>   
+
+
+texture{ Tom_Wood }  finish { specular .5 /*reflection { .3, .6 }*/ } }
 
 /***************   Toroide    ***************/
-torus{ 0.5, 0.2 rotate <90,0,0> translate <0,2,3> rotate <0,360*clock,0> texture{ pigment{ White } }  finish { specular .5 } }
+torus{ 0.5, 0.2 rotate <90,0,0> translate <0,2,3> 
+
+//********************** Rotacion sobre el propio eje
+translate -<0,2,3> 
+rotate <0,360*clock,0>  
+translate <0,2,3>
+//**********************
+
+rotate <0,360*clock,0> 
+
+texture{ pigment{ White } }  finish { specular .5 } }
 
 /***************     Caja     ***************/
-box{ <0.5,0.5,0.5> <-0.5,-0.5,-0.5>  translate<-3,2,-3> rotate <0,360*clock,0>  texture { pigment { Magenta } }  finish { specular .5 } }        
+box{ <0.5,0.5,0.5> <-0.5,-0.5,-0.5> 
+translate <-3,2,-3>
+
+//////////////Rotacion sobre el propio eje 
+translate -<-3,2,-3> 
+rotate <0,360*clock,0>  
+translate <-3,2,-3>
+//////////////
+ 
+rotate <0,360*clock,0>
+texture { pigment { Magenta } }  finish { specular .5 } }        
 
 
 /*************** Objeto nuevo ***************/ 
@@ -97,7 +139,13 @@ union{
           <plx,ply,plz>, <0,1,0>, 1, 0.7 texture{ Gold_Metal } // texturas a aros objeto nuevo
         } 
     
-    rotate <0,360*clock,0>
+//********************** Rotacion sobre el propio eje
+translate -<plx,ply,plz> 
+rotate <0,360*clock,0>  
+translate <plx,ply,plz>
+//**********************
+
+rotate <0,360*clock,0>
 }   
   
 /*************** Segundo Objeto nuevo ***************/   
@@ -132,7 +180,15 @@ object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de a
                   finish { phong 1 } }
      
 }
-    translate <0,10,-25>
+translate <0,10,-25>  
+    
+//********************** Rotacion sobre el propio eje
+translate -<0,10,-25> 
+rotate <0,360*clock,0>  
+translate <0,10,-25>
+//**********************
+    
+rotate <0,360*clock,0>
     scale 0.2
 
 }
