@@ -5,7 +5,11 @@ Antialias_Depth=5
 Input_File_Name=main.pov
 
 Initial_Frame=1
-Final_Frame=130
+<<<<<<< HEAD
+Final_Frame=210
+=======
+Final_Frame=500
+>>>>>>> d0e3d312a5742a7278d0d90db2ecc23dea34077d
 Initial_Clock=0
 Final_Clock=1
 

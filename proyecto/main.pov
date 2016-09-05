@@ -129,7 +129,7 @@ plane{ y,  0
                      //WOOD
                      pigment{checker pigment { DMFWood5 }, pigment { DMFWood1 } scale 1 } 
                      finish { specular 1}
-                #break;
+                #break;   
             #end     
           } 
           

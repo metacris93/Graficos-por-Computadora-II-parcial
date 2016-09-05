@@ -9,7 +9,7 @@
 
 //camara
 camera{
-   location <0,9,-12>
+   location <0,9,-12>//<0,20,0>
    look_at <0,0,0>
    angle 45
 } 
@@ -106,13 +106,33 @@ background{ White }
                                               
 /*****************   plano   *********************/
 
-
-plane{ y,  0 
-          pigment                
+plane{ y,  0                
+          texture                
           { 
-            checker pigment { DMFWood5 }, pigment { DMFWood1 }
-          }
-          finish { specular 1 }
+            #switch (rango)
+                #case(1)
+                      //GLASS 
+                      pigment{checker pigment { DMFWood5 }, pigment { DMFWood1 } scale 1 }
+                      finish { phong .8 }   
+                #break;
+                #case(2)
+                      //METAL
+                      pigment{checker pigment { DMFWood5 }, pigment { DMFWood1 } scale 1 } 
+                      finish { ambient .2 diffuse .2  specular 1.5 roughness .02 brilliance 2 reflection { .6 metallic 1 } metallic  }
+                #break;
+                #case(3)
+                      pigment
+                      { checker pigment { DMFWood5 }, pigment { DMFWood1 }  }                                                      
+                      finish { diffuse 0 reflection 0.5 specular 1 ambient 1 }
+                #break;
+                #case(4)
+                     //WOOD
+                     pigment{checker pigment { DMFWood5 }, pigment { DMFWood1 } scale 1 } 
+                     finish { specular 1}
+                #break;
+            #end     
+          } 
+          
           normal
           { average normal_map
             { [1 TileNormal]
@@ -225,17 +245,14 @@ rotate <0,360*clock,0>
 }
 
 
-
-
-
 /***************     Caja     ***************/
 box{ <0.5,0.5,0.5> <-0.5,-0.5,-0.5> 
-translate <-3,2,-3>
+translate <-3,2,-2>
 
 //////////////Rotacion sobre el propio eje 
-translate -<-3,2,-3> 
+translate -<-3,2,-2> 
 rotate <0,360*clock,0>  
-translate <-3,2,-3>
+translate <-3,2,-2>
 //////////////
  
 rotate <0,360*clock,0>
@@ -263,28 +280,28 @@ rotate <0,360*clock,0>
         
 #declare plx=3;  //pl = planeta en x, y o z respectivamente
 #declare ply=2;
-#declare plz=-3;         
+#declare plz=-2;         
         
 union{
     sphere{ <plx,ply,plz>, 0.5  //texture{ EMBWood1 }//textura al objeto nuevo      
     
-#switch (rango)
-  #case (1)
-    texture { T_Wood11 }  finish { specular .5 }   
-  #break 
-  
-  #case (2)
-    texture{ T_Wood12}  finish { specular .5 }
-  #break
-  #case (3)
-     texture {T_Wood13}  finish { specular .5 }
-  #break
-  #case (4)
-  texture{T_Wood14}  finish { specular .5 }
-  #break
-  
-#end     
-}
+    #switch (rango)
+      #case (1)
+        texture { T_Wood11 }  finish { specular .5 }   
+      #break 
+      
+      #case (2)
+        texture{ T_Wood12}  finish { specular .5 }
+      #break
+      #case (3)
+         texture {T_Wood13}  finish { specular .5 }
+      #break
+      #case (4)
+      texture{T_Wood14}  finish { specular .5 }
+      #break
+      
+    #end     
+    }
        
     
     /*disc
@@ -316,7 +333,10 @@ union{  //Objeto globo terraqueo
 
 #declare gtx=0; //gt = globo terraqueo en x, y, z segun la ultima letra, para poner todo en funcion del centro de la esfera del globo
 #declare gty=2;
-#declare gtz=-3; 
+#declare gtz=-3;
+#declare globoX=0;
+#declare globoY=10;
+#declare globoZ=-20;
 
 object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de angulo )
         texture { pigment{color rgb<1,0.7,0>}
@@ -342,12 +362,12 @@ object{ Segment_of_Torus( 4,0.4,-175) //(radio mayor, radio menor, segmento de a
                   finish { phong 1 } }
      
 }
-translate <0,10,-25>  
+translate <globoX,globoY,globoZ>  
     
 //********************** Rotacion sobre el propio eje
-translate -<0,10,-25> 
+translate -<globoX,globoY,globoZ> 
 rotate <0,360*clock,0>  
-translate <0,10,-25>
+translate <globoX,globoY,globoZ>
 //**********************
     
 rotate <0,360*clock,0>
